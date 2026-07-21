@@ -1,35 +1,14 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const requiredPaths = [
-  'next.config.mjs',
-  'app/layout.tsx',
-  'app/page.tsx',
-  'app/(portal)/layout.tsx',
-  'app/(portal)/page.tsx',
-  'components/FleetTable.tsx',
-  'components/MetricCard.tsx',
-  'components/ServiceQueue.tsx',
-  'lib/format.ts',
-  'lib/supabase.ts',
-  'lib/types.ts',
-  'middleware.ts',
-  'data/fleet.ts',
-  'supabase/schema.sql',
+  'next.config.mjs', 'tailwind.config.ts', 'postcss.config.mjs', 'app/layout.tsx', 'app/page.tsx', 'app/(portal)/layout.tsx', 'app/(portal)/page.tsx', 'app/api/auth/[...nextauth]/route.ts', 'components/AuthStatus.tsx', 'components/DataTable.tsx', 'components/MetricCard.tsx', 'components/PortalShell.tsx', 'lib/auth.ts', 'lib/format.ts', 'lib/supabase.ts', 'lib/types.ts', 'middleware.ts', 'data/fleet.ts', 'supabase/schema.sql'
 ];
 
 const missing = requiredPaths.filter((path) => !existsSync(join(process.cwd(), path)));
+const nextConfigs = readdirSync(process.cwd()).filter((entry) => /^next\.config\./.test(entry));
 
-const forbiddenNextConfigs = ['next.config.ts', 'next.config.js', 'next.config.cjs'].filter((path) =>
-  existsSync(join(process.cwd(), path)),
-);
+if (nextConfigs.length !== 1 || nextConfigs[0] !== 'next.config.mjs') throw new Error(`Only next.config.mjs is allowed. Found: ${nextConfigs.join(', ') || 'none'}`);
+if (missing.length > 0) throw new Error(`Missing required portal files:\n${missing.join('\n')}`);
 
-if (forbiddenNextConfigs.length > 0) {
-  throw new Error(`Only next.config.mjs is allowed. Remove:\n${forbiddenNextConfigs.join('\n')}`);
-}
-
-if (missing.length > 0) {
-  throw new Error(`Missing required portal files:\n${missing.join('\n')}`);
-}
-
-console.log('Prime Fleet Portal build validation passed.');
+console.log('Prime Fleet Portal production build validation passed.');

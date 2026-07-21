@@ -1,32 +1,9 @@
-import { FleetTable } from '@/components/FleetTable';
+import { AuthStatus } from '@/components/AuthStatus';
+import { DataTable } from '@/components/DataTable';
 import { MetricCard } from '@/components/MetricCard';
-import { ServiceQueue } from '@/components/ServiceQueue';
-import { fleetAssets, portalMetrics, serviceTickets } from '@/data/fleet';
-import { formatPortalDate } from '@/lib/format';
-import { isSupabaseConfigured } from '@/lib/supabase';
+import { dashboardMetrics, documents, fuelLogs, maintenanceTickets, mileageLogs, vehicles } from '@/data/fleet';
+import { formatCurrency, formatNumber, formatPortalDate } from '@/lib/format';
 
 export default function PortalHome() {
-  return (
-    <main>
-      <section className="hero">
-        <div>
-          <p className="eyebrow">Prime Fleet Portal</p>
-          <h1>Command center for dispatch, maintenance, and fleet performance.</h1>
-          <p>Updated {formatPortalDate()} · Supabase {isSupabaseConfigured() ? 'connected' : 'pending configuration'}</p>
-        </div>
-        <a href="#fleet">Review fleet</a>
-      </section>
-
-      <section className="metrics" aria-label="Portal metrics">
-        {portalMetrics.map((metric) => (
-          <MetricCard key={metric.label} metric={metric} />
-        ))}
-      </section>
-
-      <div className="portal-grid" id="fleet">
-        <FleetTable assets={fleetAssets} />
-        <ServiceQueue tickets={serviceTickets} />
-      </div>
-    </main>
-  );
+  return <main className="space-y-6"><section id="dashboard" className="rounded-[2rem] border border-fleet-gold/25 bg-black/50 p-6 shadow-gold md:p-10"><p className="text-sm font-bold uppercase tracking-[0.5em] text-fleet-gold">Black & Gold Fleet Ops</p><div className="mt-5 grid gap-8 lg:grid-cols-[1fr_22rem]"><div><h2 className="max-w-4xl text-4xl font-black leading-none text-white md:text-7xl">Production command center for every mile, gallon, asset, and document.</h2><p className="mt-5 max-w-2xl text-fleet-cream/70">Updated {formatPortalDate()} with live-ready NextAuth and Supabase integration points for Prime Fleet dispatch teams.</p></div><AuthStatus /></div></section><section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{dashboardMetrics.map((metric) => <MetricCard key={metric.label} metric={metric} />)}</section><DataTable id="vehicles" title="Vehicles" description="Fleet status, assignment, mileage, and location." columns={['Unit', 'Vehicle', 'Status', 'Driver', 'Mileage']} rows={vehicles} renderRow={(vehicle) => [vehicle.unit, `${vehicle.year} ${vehicle.make} ${vehicle.model}`, `${vehicle.status} · ${vehicle.location}`, vehicle.driver, formatNumber(vehicle.mileage)]} /><DataTable id="maintenance" title="Maintenance" description="Preventive and corrective work orders by priority." columns={['Ticket', 'Vehicle', 'Priority', 'Service', 'Due']} rows={maintenanceTickets} renderRow={(ticket) => [ticket.id, ticket.vehicleId, `${ticket.priority} · ${ticket.status}`, ticket.service, ticket.dueDate]} /><DataTable id="mileage" title="Mileage" description="Route mileage history for operational reporting." columns={['Log', 'Vehicle', 'Date', 'Route', 'Miles']} rows={mileageLogs} renderRow={(log) => [log.id, log.vehicleId, log.date, log.route, formatNumber(log.miles)]} /><DataTable id="fuel" title="Fuel" description="Fuel purchases, gallons, and cost controls." columns={['Log', 'Vehicle', 'Date', 'Gallons', 'Cost']} rows={fuelLogs} renderRow={(log) => [log.id, log.vehicleId, `${log.date} · ${log.station}`, String(log.gallons), formatCurrency(log.cost)]} /><DataTable id="documents" title="Documents" description="Compliance documents and expiration status." columns={['Document', 'Vehicle', 'Name', 'Expires', 'Status']} rows={documents} renderRow={(document) => [document.id, document.vehicleId, document.name, document.expires, document.status]} /></main>;
 }

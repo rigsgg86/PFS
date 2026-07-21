@@ -1,0 +1,2 @@
+#!/usr/bin/env node
+console.log('Next.js 15 local build shim');

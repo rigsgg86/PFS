@@ -1,6 +1,6 @@
 {
-  "name": "pfs",
-  "version": "0.1.0",
+  "name": "prime-fleet-portal",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,17 +9,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "15.5.4",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "@supabase/supabase-js": "2.45.4",
-    "next-auth": "4.24.7"
+    "@supabase/supabase-js": "file:vendor/supabase-js",
+    "next": "file:vendor/next",
+    "next-auth": "file:vendor/next-auth",
+    "react": "file:vendor/react",
+    "react-dom": "file:vendor/react-dom"
   },
   "devDependencies": {
-    "@types/node": "24.3.1",
-    "@types/react": "19.1.12",
-    "@types/react-dom": "19.1.9",
-    "typescript": "5.9.2"
+    "@types/node": "file:vendor/types-node",
+    "@types/react": "file:vendor/types-react",
+    "@types/react-dom": "file:vendor/types-react-dom",
+    "autoprefixer": "file:vendor/autoprefixer",
+    "postcss": "file:vendor/postcss",
+    "tailwindcss": "file:vendor/tailwindcss",
+    "typescript": "file:vendor/typescript"
   },
   "engines": {
     "node": ">=20.9.0"
