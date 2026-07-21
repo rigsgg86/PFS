@@ -1,0 +1,2 @@
+import { vehicles } from "@/data/fleet";
+export default function Reminders(){return <><h1 className="text-4xl font-bold">Service reminders</h1><div className="mt-8 grid gap-4">{vehicles.map(v=><div className="card rounded-3xl p-6" key={v.id}><b className="text-gold">{v.year} {v.make} {v.model}</b><p className="mt-2">Service due at {v.nextServiceMiles.toLocaleString()} miles. Current mileage is {v.mileage.toLocaleString()}.</p><p className="text-sm text-white/55">Target date: {v.nextServiceDate}</p></div>)}</div></>}

@@ -1,0 +1,5 @@
+create table if not exists vehicles (id text primary key, year int not null, make text not null, model text not null, trim text, vin text unique, plate text, status text, mileage int, next_service_miles int, next_service_date date, assigned_to text, location text, image text, documents int default 0, photos int default 0);
+create table if not exists maintenance_logs (id bigint generated always as identity primary key, vehicle text not null, type text not null, date date not null, cost numeric, status text not null);
+create table if not exists mileage_logs (id bigint generated always as identity primary key, vehicle text not null, date date not null, miles int not null, driver text);
+create table if not exists fuel_logs (id bigint generated always as identity primary key, vehicle text not null, date date not null, gallons numeric not null, cost numeric not null);
+create table if not exists documents (id bigint generated always as identity primary key, vehicle text not null, name text not null, expires date);

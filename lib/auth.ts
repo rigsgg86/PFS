@@ -1,0 +1,3 @@
+import type { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+export const authOptions: NextAuthOptions = { session: { strategy: "jwt" }, pages: { signIn: "/login" }, providers: [CredentialsProvider({ name: "Admin", credentials: { email: { label: "Email", type: "email" }, password: { label: "Password", type: "password" } }, async authorize(credentials) { const ok = credentials?.email === process.env.ADMIN_EMAIL && credentials?.password === process.env.ADMIN_PASSWORD; return ok ? { id: "prime-admin", name: "Prime Fleet Admin", email: credentials.email } : null; } })], callbacks: { session({ session, token }) { if (session.user) session.user.email = token.email; return session; } } };
