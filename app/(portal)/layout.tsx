@@ -1,0 +1,2 @@
+import type { ReactNode } from "react";import { Nav } from "@/components/nav";
+export default function PortalLayout({children}:{children:ReactNode}){return <main className="flex min-h-screen"><Nav/><section className="w-full p-4 md:p-8"><div className="mb-6 rounded-3xl border border-gold/20 bg-charcoal p-5 md:hidden"><b className="text-gold">Prime Fleet Portal</b></div>{children}</section></main>}
