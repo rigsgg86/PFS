@@ -3,6 +3,8 @@ import { join } from 'node:path';
 
 const requiredPaths = [
   'next.config.mjs',
+  'app/layout.tsx',
+  'app/page.tsx',
   'app/(portal)/layout.tsx',
   'app/(portal)/page.tsx',
   'components/FleetTable.tsx',
@@ -18,8 +20,12 @@ const requiredPaths = [
 
 const missing = requiredPaths.filter((path) => !existsSync(join(process.cwd(), path)));
 
-if (existsSync(join(process.cwd(), 'next.config.ts'))) {
-  throw new Error('next.config.ts must not exist; use next.config.mjs instead.');
+const forbiddenNextConfigs = ['next.config.ts', 'next.config.js', 'next.config.cjs'].filter((path) =>
+  existsSync(join(process.cwd(), path)),
+);
+
+if (forbiddenNextConfigs.length > 0) {
+  throw new Error(`Only next.config.mjs is allowed. Remove:\n${forbiddenNextConfigs.join('\n')}`);
 }
 
 if (missing.length > 0) {
