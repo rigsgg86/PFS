@@ -1,0 +1,3 @@
+import Link from "next/link";
+const links=["dashboard","vehicles","maintenance","mileage","fuel","documents","reminders"];
+export function Nav(){return <aside className="sticky top-0 h-screen w-72 border-r border-gold/20 bg-ink p-6 max-lg:hidden"><div className="mb-10 flex items-center gap-3"><span className="rounded-xl bg-gold p-2 text-ink">▰</span><div><b>Prime Fleet</b><p className="text-xs text-white/55">Portal</p></div></div><nav className="space-y-2">{links.map(l=><Link className="block rounded-xl px-4 py-3 text-sm capitalize text-white/75 hover:bg-gold hover:text-ink" href={`/${l}`} key={l}>{l}</Link>)}</nav></aside>}

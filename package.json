@@ -1,6 +1,8 @@
 {
   "name": "pfs",
   "version": "0.1.0",
+  "name": "prime-fleet-portal",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,6 +12,12 @@
   },
   "dependencies": {
     "next": "15.5.4",
+    "typecheck": "tsc --noEmit",
+    "db:seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "next": "15.5.0",
+    "next-auth": "latest",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
@@ -18,5 +26,9 @@
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.9",
     "typescript": "5.9.2"
+    "postcss": "latest",
+    "tailwindcss": "^3.4.17",
+    "tsx": "latest",
+    "typescript": "latest"
   }
 }
