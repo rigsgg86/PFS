@@ -10,7 +10,7 @@
     "db:seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
-    "next": "15.5.0",
+    "next": "15.5.9",
     "next-auth": "latest",
     "react": "19.1.0",
     "react-dom": "19.1.0"
